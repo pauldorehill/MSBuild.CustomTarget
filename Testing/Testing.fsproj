@@ -1,24 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <!--Set custom restore source to use local nupkg-->
     <RestoreSources>https://api.nuget.org/v3/index.json;../Target.Task/bin/$(Config);../Target.Exec/bin/$(Config)</RestoreSources>
   </PropertyGroup>
-
-
-  <!--<Target Name="ShowRestoreSources" AfterTargets="Restore">
-    <Message Importance="High" Text="Restored nupkg from: $(RestoreSources)" />
-  </Target>-->
-
   <ItemGroup>
     <Compile Include="Library.fs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Target.Task" Version="0.0.1" />
-    <!--Have to manually hack the nuspec file to add dependancy on netstandard and remove tool reference-->
     <PackageReference Include="Target.Exec" Version="0.0.1" />
   </ItemGroup>
-
 </Project>

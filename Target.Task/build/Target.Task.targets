@@ -2,10 +2,10 @@
   <!--TaskName is the namespace + path to the class-->
   <!--Must register the task with MSBuild-->
   <UsingTask TaskName="Target.Task.MyCustomTask" AssemblyFile="$(TaskDLLPath)"/>
-  
-  <Target Name="MyCustomTask" AfterTargets="CopyFilesToOutputDirectory">
+
+  <Target Name="MyCustomTask" AfterTargets="$(WhenToRundo)">
     <Message Importance="High" Text="Looked for Task source .dll at: $(TaskDLLPath)"/>
     <MyCustomTask ProjectName="$(MSBuildProjectName)"/>
   </Target>
-  
+
 </Project>

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <!-- <Authors>Paul Dorehill</Authors> -->
+    <!-- <PackAsTool>true</PackAsTool> -->
+    <!-- <PackageId>Target.Exec</PackageId> -->
+    <!-- <Version>0.0.1</Version> -->
+    <NuspecFile>Target.Exec.nuspec</NuspecFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <!--These must be in a folder named ./build and named projName.targets or projName.props-->
+  <ItemGroup>
+    <Content Include="build/Target.Exec.targets">
+      <!-- Use package path to specify where it ends up - Identity in this case will keep the same as in the project  eg. build/-->
+      <PackagePath>%(Identity)</PackagePath>
+      <!--Controls if visible in editor-->
+      <Visible>True</Visible>
+    </Content>
+    <Content Include="build/Target.Exec.props">
+      <PackagePath>%(Identity)</PackagePath>
+      <Visible>True</Visible>
+    </Content>
+  </ItemGroup>
+
+</Project>

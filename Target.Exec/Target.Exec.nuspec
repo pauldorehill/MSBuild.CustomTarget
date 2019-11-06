@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Target.Exec</id>
+    <version>0.0.1</version>
+    <authors>Paul Dorehill</authors>
+    <owners>Paul Dorehill</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETStandard2.1">
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Debug\netcoreapp3.0\**" exclude="**\*.exe" target="tools\netcoreapp3.0\any" />
+    <file src="build\*.*" target="build" />
+  </files>
+</package>

@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="RunMyTool" AfterTargets = "CopyFilesToOutputDirectory" >
+    <Exec Command="dotnet &quot;$(DllPath)&quot; $(MSBuildProjectName)" />
+  </Target>
+
+</Project>

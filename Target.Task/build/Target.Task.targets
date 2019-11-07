@@ -1,11 +1,14 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--TaskName is the namespace + path to the class-->
-  <!--Must register the task with MSBuild-->
-  <UsingTask TaskName="Target.Task.MyCustomTask" AssemblyFile="$(TaskDLLPath)"/>
+    <!--TaskName is the namespace + path to the class-->
+    <!--Must register the task with MSBuild-->
+    <UsingTask TaskName="Target.Task.MyCustomTask" AssemblyFile="$(TaskDLLPath)"/>
 
-  <Target Name="MyCustomTask" AfterTargets="$(WhenToRundo)">
-    <Message Importance="High" Text="Looked for Task source .dll at: $(TaskDLLPath)"/>
-    <MyCustomTask ProjectName="$(MSBuildProjectName)"/>
-  </Target>
+    <Target Name="MyCustomTask" AfterTargets="$(WhenToRun)">
+        <Message Importance="High" Text="--------------------------------------------------------------------------------------------"/>
+        <Message Importance="High" Text="You are now running a Target from a nuget package in your project. This target calls a Task."/>
+        <Message Importance="High" Text="Looked for Task source .dll at:"/>
+        <Message Importance="High" Text="    $(TaskDLLPath)"/>
+        <MyCustomTask ProjectName="$(MSBuildProjectName)"/>
+    </Target>
 
 </Project>

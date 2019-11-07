@@ -8,33 +8,55 @@ This project shows two ways this can be achieved - when running `dotnet build` o
 Microsoft (R) Build Engine version 16.3.0+0f4c62fea for .NET Core
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-  Restore completed in 30.37 ms for C:\Users\Paul\source\repos\MSBuild.CustomTarget\testing\Testing.fsproj.
-  Testing -> C:\Users\Paul\source\repos\MSBuild.CustomTarget\testing\bin\Debug\netcoreapp3.0\Testing.dll
+  Restore completed in 19.06 ms for C:\Users\Paul\source\repos\MSBuild.CustomTarget\Testing\Testing.fsproj.
+  Testing -> C:\Users\Paul\source\repos\MSBuild.CustomTarget\Testing\bin\Debug\netcoreapp3.0\Testing.dll
+  --------------------------------------------------------------------------------------------
+  You are now running a Target from a nuget package in your project. This target calls a Task.
+  Looked for Task source .dll at:
+      C:\Users\Paul\.nuget\packages\target.task\0.0.1\build\../lib/netstandard2.1/Target.Task.dll
+  A Target has sucessfully called a Task when building your project called 'Testing'
+  --------------------------------------------------------------------------------------------
 
-  // This is running a Target from the Target.Task.0.0.1 package
-  Looked for Task source .dll at: C:\Users\Paul\.nuget\packages\target.task\0.0.1\build\../lib/netstandard2.1/Target.Task.dll
-  Hello, you have run a custom Target -> Task from a nuget package during your build in project named 'Testing'
 
-  // This is running a Target from the Target.Exec.0.0.1 package
+  --------------------------------------------------------------------------------------------
   You have run an Target excutable from a nuget package in your project 'Testing'
+  I will now print all your User Secrets:
+  The User Secret with Key: UpperKey:ServiceApiKey has a value of: 12345
+  The User Secret with Key: UpperKey:ConnectionString has a value of: MyConnString
+  --------------------------------------------------------------------------------------------
 ```
 The full guide to [MSBuild](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild?view=vs-2019) and some of the offical [custom SDKs](https://github.com/microsoft/MSBuildSdks).
 
 ### 1. Pack with a `Task`
-This is the most simple - see the `Target.Task` project.
+This is the most simple - see the `Target.Task` project. One issue with this is that if you and any dependancies these `.dlls` do not get packaged and the `Task` will fail to run in the calling project.
 
 ### 2. Pack a netcoreapp `.dll` to run with `dotnet`
 
 This uses a `netcoreapp3.0` that can be run using the `exec` command - see the `Target.Exec` project.
 
-By using `<NuspecFile>Target.Exec.nuspec</NuspecFile>` and creating a custom [.nuspec](https://docs.microsoft.com/en-us/nuget/reference/nuspec) file allows this can be packed and run & referenced from a netstandard2.1 project.
+By using
+```fsharp
+<NuspecFile>Target.Exec.nuspec</NuspecFile>
+```
+and creating a custom [.nuspec](https://docs.microsoft.com/en-us/nuget/reference/nuspec) file allows this can be packed and then run and referenced from a netstandard2.1 project.
 
+This project will read the [User Secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.0&tabs=windows) file if there is a `<UserSecretsId>` property
+```fsharp
+<ItemGroup>
+    <SecretsKey Include="UpperKey:ServiceApiKey"/>
+    <SecretsKey Include="UpperKey:ConnectionString"/>
+</ItemGroup>
+```
 ### Custom NuGet
 
 In order to use a local version of the packages, use the `RestoreSource` xml property in something like:
 
 ```xml
-<RestoreSources>https://api.nuget.org/v3/index.json;../Target.Task/bin/$(Config);../Target.Exec/bin/$(Config)</RestoreSources>
+<RestoreSources>
+    https://api.nuget.org/v3/index.json;
+    ../Target.Task/bin/$(Config);
+    ../Target.Exec/bin/$(Config)
+</RestoreSources>
 ```
 
 If you package again and do not increment the package build it will not get replaced in the local NuGet store when running a restore: so you need to delete from `C:/Users/User/.nuget` etc. NuGet cli [reference](https://docs.microsoft.com/en-us/nuget/reference/nuget-exe-cli-reference).
@@ -58,3 +80,10 @@ MyProject.fsproj
     MyProject.target
 MyFiles.fs
 ```
+
+### MSBuild Notes
+
+Access a property with `$(propName)`
+
+Access an item (list) with `@(itemName)`. The item list can also be mapped in the form `@(itemName -> Count())`.
+See [item functions](https://docs.microsoft.com/en-us/visualstudio/msbuild/item-functions?view=vs-2019).

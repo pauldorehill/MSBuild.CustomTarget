@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="RunMyTool" AfterTargets = "CopyFilesToOutputDirectory" >
-    <Exec Command="dotnet &quot;$(DllPath)&quot; $(MSBuildProjectName)" />
-  </Target>
+    <Target Name="LoadUserSecret" AfterTargets="$(WhenToRun)" Condition="$(UserSecretsId) != '' And @(SecretsKey -> Count()) > 0">
+        <Exec Command="dotnet &quot;$(DllPath)&quot; &quot;$(MSBuildProjectName)&quot; &quot;$(UserSecretsId)&quot; &quot;@(SecretsKey, '--::--')&quot;" />
+    </Target>
 
 </Project>

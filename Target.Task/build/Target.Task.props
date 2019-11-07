@@ -1,8 +1,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup>
-    <TaskDLLPath>$(MSBuildThisFileDirectory)../lib/netstandard2.1/Target.Task.dll</TaskDLLPath>
-    <WhenToRun>CopyFilesToOutputDirectory</WhenToRun>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TaskDLLPath>$(MSBuildThisFileDirectory)../lib/netstandard2.1/Target.Task.dll</TaskDLLPath>
+        <WhenToRun>CopyFilesToOutputDirectory</WhenToRun>
+    </PropertyGroup>
 
 </Project>

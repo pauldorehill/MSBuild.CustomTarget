@@ -1,35 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Authors>Paul Dorehill</Authors>
-    <PackageId>Target.Task</PackageId>
-    <Version>0.0.1</Version>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Authors>Paul Dorehill</Authors>
+        <PackageId>Target.Task</PackageId>
+        <Version>0.0.1</Version>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="Task.fs" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Task.fs" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" />
-  </ItemGroup>
+    <!-- Note by default the package dependancies are not bundled with the package -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" />
+    </ItemGroup>
 
-  <!--There are for if you want to run while building this proj-->
-  <!--<Import Project="build/Target.Task.props"/>
-  <Import Project="build/Target.Task.targets"/>-->
-  
+    <!--There are for if you want to run while building this proj-->
+    <!-- <Import Project="build/Target.Task.props"/>
+    <Import Project="build/Target.Task.targets"/> -->
+
     <!--These must be in a folder named ./build and named projName.targets or projName.props-->
-  <ItemGroup>
-    <Content Include="build/Target.Task.targets">
-      <!-- Use package path to specify where it ends up - Identity in this case will keep the same as in the project  eg. build/-->
-       <PackagePath>%(Identity)</PackagePath>
-      <!--Controls if visible in editor-->
-       <Visible>True</Visible>
-    </Content>
-    <Content Include="build/Target.Task.props">
-       <PackagePath>%(Identity)</PackagePath>
-       <Visible>True</Visible>
-    </Content>
-  </ItemGroup>
-
+    <ItemGroup>
+        <Content Include="build/Target.Task.targets">
+            <!-- Use package path to specify where it ends up - Identity in this case will keep the same as in the project  eg. build/-->
+            <PackagePath>%(Identity)</PackagePath>
+            <!--Controls if visible in editor-->
+            <Visible>True</Visible>
+        </Content>
+        <Content Include="build/Target.Task.props">
+            <PackagePath>%(Identity)</PackagePath>
+            <Visible>True</Visible>
+        </Content>
+    </ItemGroup>
 </Project>
